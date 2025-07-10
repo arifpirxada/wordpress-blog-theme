@@ -1,4 +1,6 @@
 <?php
+require get_template_directory() . '/inc/classes/class-theme.php';
+
 function register_theme_assets()
 {
   // Register Google Fonts
@@ -59,3 +61,6 @@ function register_my_menus()
   );
 }
 add_action('init', 'register_my_menus');
+
+
+// Setup 

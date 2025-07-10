@@ -20,6 +20,12 @@
         font-size: 1.1rem;
     }
 
+    .collection-container .collection-card .product-image img {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+    }
+
     .collection-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -143,6 +149,11 @@
         font-weight: 600;
     }
 
+    .collection-card .product-info .product-title a {
+        color: #2c3e50;
+        text-decoration: none;
+    }
+
     .collection-card .product-info .product-subtitle {
         color: #7f8c8d;
         margin-bottom: 20px;
@@ -223,131 +234,114 @@
 </style>
 
 <div class="collection-container">
-<div class="collection-container">
-    <div class="collection-header">
-        <h2>Editor's Picks</h2>
-        <p>Curated blog posts from our writers — trending topics, timeless reads, and hidden gems.</p>
-    </div>
-
-    <div class="collection-grid">
-        <div class="collection-card card-1">
-            <div class="bestseller-badge">FEATURED</div>
-            <div class="fragrance-notes">
-                <div class="note-icon">🧠</div>
-                <div class="note-icon">📖</div>
-                <div class="note-icon">🌿</div>
-            </div>
-            <div class="product-image">
-                <div class="bottle"></div>
-            </div>
-            <div class="product-info">
-                <h3 class="product-title">The Psychology of Simplicity</h3>
-                <p class="product-subtitle">Minimalism & Mindfulness</p>
-                <div class="rating">
-                    <div class="stars">★★★★☆</div>
-                    <div class="rating-info">
-                        <span class="rating-score">4.4</span>
-                        <span>|</span>
-                        <span>📝 (38 comments)</span>
-                    </div>
-                </div>
-                <div class="price">5 min read</div>
-                <div class="scent-indicators">
-                    <div class="scent-tag">Lifestyle</div>
-                    <div class="scent-tag">Wellness</div>
-                    <div class="scent-tag">Mind</div>
-                </div>
-            </div>
+    <div class="collection-container">
+        <div class="collection-header">
+            <h2>Editor's Picks</h2>
+            <p>Curated blog posts from our writers — trending topics, timeless reads, and hidden gems.</p>
         </div>
 
-        <div class="collection-card card-2">
-            <div class="bestseller-badge">POPULAR</div>
-            <div class="fragrance-notes">
-                <div class="note-icon">🌍</div>
-                <div class="note-icon">📷</div>
-                <div class="note-icon">✈️</div>
-            </div>
-            <div class="product-image">
-                <div class="bottle"></div>
-            </div>
-            <div class="product-info">
-                <h3 class="product-title">A Guide to Solo Travel</h3>
-                <p class="product-subtitle">Journeys of Discovery</p>
-                <div class="rating">
-                    <div class="stars">★★★★☆</div>
-                    <div class="rating-info">
-                        <span class="rating-score">4.4</span>
-                        <span>|</span>
-                        <span>📝 (47 comments)</span>
-                    </div>
-                </div>
-                <div class="price">7 min read</div>
-                <div class="scent-indicators">
-                    <div class="scent-tag">Travel</div>
-                    <div class="scent-tag">Adventure</div>
-                    <div class="scent-tag">Solo</div>
-                </div>
-            </div>
-        </div>
+        <div class="collection-grid">
 
-        <div class="collection-card card-3">
-            <div class="bestseller-badge">RECOMMENDED</div>
-            <div class="fragrance-notes">
-                <div class="note-icon">🌼</div>
-                <div class="note-icon">📔</div>
-                <div class="note-icon">💬</div>
-            </div>
-            <div class="product-image">
-                <div class="bottle"></div>
-            </div>
-            <div class="product-info">
-                <h3 class="product-title">Finding Your Creative Voice</h3>
-                <p class="product-subtitle">From Hobby to Habit</p>
-                <div class="rating">
-                    <div class="stars">★★★★★</div>
-                    <div class="rating-info">
-                        <span class="rating-score">4.7</span>
-                        <span>|</span>
-                        <span>📝 (21 comments)</span>
-                    </div>
-                </div>
-                <div class="price">6 min read</div>
-                <div class="scent-indicators">
-                    <div class="scent-tag">Creativity</div>
-                    <div class="scent-tag">Writing</div>
-                    <div class="scent-tag">Motivation</div>
-                </div>
-            </div>
-        </div>
+            <?php
+            // Custom query to limit posts to 3
+            $args = array(
+                'post_type' => 'post',
+                'posts_per_page' => 3,
+                'post_status' => 'publish'
+            );
 
-        <div class="collection-card card-4">
-            <div class="bestseller-badge">TRENDING</div>
-            <div class="fragrance-notes">
-                <div class="note-icon">💡</div>
-                <div class="note-icon">📱</div>
-                <div class="note-icon">⌛</div>
-            </div>
-            <div class="product-image">
-                <div class="bottle"></div>
-            </div>
-            <div class="product-info">
-                <h3 class="product-title">Digital Declutter in 2025</h3>
-                <p class="product-subtitle">Reclaiming Your Time</p>
-                <div class="rating">
-                    <div class="stars">★★★★★</div>
-                    <div class="rating-info">
-                        <span class="rating-score">4.6</span>
-                        <span>|</span>
-                        <span>📝 (41 comments)</span>
+            $blog_posts = new WP_Query($args);
+
+            if ($blog_posts->have_posts()) :
+                $post_count = 0;
+                while ($blog_posts->have_posts()) :
+                    $blog_posts->the_post();
+                    $post_count++;
+
+                    // Get post data
+                    $post_id = get_the_ID();
+                    $post_title = get_the_title();
+                    $post_excerpt = get_the_excerpt();
+                    $post_permalink = get_permalink();
+                    $post_date = get_the_date();
+                    $reading_time = ceil(str_word_count(get_the_content()) / 200); // Estimate reading time
+                    $comment_count = get_comments_number();
+
+                    // Get categories for tags
+                    $categories = get_the_category();
+                    $category_names = array();
+                    if (!empty($categories)) {
+                        foreach ($categories as $category) {
+                            $category_names[] = $category->name;
+                        }
+                    }
+
+                    // Get featured image
+                    $featured_image = get_the_post_thumbnail_url($post_id, 'medium');
+            ?>
+
+                    <div class="collection-card card-<?php echo $post_count; ?>">
+                        <div class="bestseller-badge">FEATURED</div>
+                        <div class="fragrance-notes">
+                            <div class="note-icon">🧠</div>
+                            <div class="note-icon">📖</div>
+                            <div class="note-icon">🌿</div>
+                        </div>
+                        <div class="product-image">
+                            <?php if ($featured_image) : ?>
+                                <img src="<?php echo esc_url($featured_image); ?>" alt="<?php echo esc_attr($post_title); ?>" class="post-thumbnail">
+                            <?php else : ?>
+                                <div class="bottle"></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <a href="<?php echo esc_url($post_permalink); ?>">
+                                    <?php echo esc_html($post_title); ?>
+                                </a>
+                            </h3>
+                            <p class="product-subtitle">
+                                <?php echo esc_html($post_excerpt ? wp_trim_words($post_excerpt, 10) : wp_trim_words(get_the_content(), 15)); ?>
+                            </p>
+                            <div class="rating">
+                                <div class="stars">★★★★☆</div>
+                                <div class="rating-info">
+                                    <span class="rating-score">4.4</span>
+                                    <span>|</span>
+                                    <span>📝 (<?php echo $comment_count; ?> comments)</span>
+                                </div>
+                            </div>
+                            <div class="price"><?php echo $reading_time; ?> min read</div>
+                            <div class="scent-indicators">
+                                <?php if (!empty($category_names)) : ?>
+                                    <?php foreach (array_slice($category_names, 0, 3) as $category_name) : ?>
+                                        <div class="scent-tag"><?php echo esc_html($category_name); ?></div>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <div class="scent-tag">Blog</div>
+                                    <div class="scent-tag">Article</div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="post-meta">
+                                <span class="post-date"><?php echo esc_html($post_date); ?></span>
+                            </div>
+                        </div>
                     </div>
+
+                <?php
+                endwhile;
+
+                // Reset post data
+                wp_reset_postdata();
+
+            else :
+                ?>
+                <div class="no-posts-message">
+                    <p><?php _e('Sorry, no posts found'); ?></p>
                 </div>
-                <div class="price">4 min read</div>
-                <div class="scent-indicators">
-                    <div class="scent-tag">Tech</div>
-                    <div class="scent-tag">Productivity</div>
-                    <div class="scent-tag">Focus</div>
-                </div>
-            </div>
+            <?php
+            endif;
+            ?>
+
         </div>
     </div>
-</div>
