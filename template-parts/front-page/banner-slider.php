@@ -193,44 +193,40 @@
     }
 </style>
 
+<?php
+
+require_once get_template_directory() . '/' . "inc/classes/class-homepage-banners.php";
+
+$homepage_banners = ELEMENTAL_HOMEPAGE_BANNERS::get_instance();
+$all_banners = $homepage_banners->get_active_banners();
+
+?>
+
 <div class="slider-container">
     <div class="slider-wrapper">
         <div class="slider-track" id="sliderTrack">
-            <!-- Slide 1 -->
-            <div class="slide active" style="background-image: url('http://localhost/word/wp-content/uploads/2025/07/ban-1.jpg')">
-                <div class="slide-content">
-                    <h2>Welcome to Our Blog</h2>
-                    <p>Explore thoughtful articles, expert tips, and fresh perspectives on lifestyle, tech, and more.</p>
-                    <a href="#" class="slide-btn">Read Latest Posts</a>
-                </div>
-            </div>
 
-            <!-- Slide 2 -->
-            <div class="slide" style="background-image: url('http://localhost/word/wp-content/uploads/2025/07/ban-2.jpg');">
-                <div class="slide-content">
-                    <h2>Summer Reads</h2>
-                    <p>Dive into hand-picked blog posts that match the summer vibe — from travel to wellness.</p>
-                    <a href="#" class="slide-btn">Explore Topics</a>
-                </div>
-            </div>
+            <?php if (!empty($all_banners)) {
+                foreach ($all_banners as $banner) {
+            ?>
 
-            <!-- Slide 3 -->
-            <div class="slide" style="background-image: url('http://localhost/word/wp-content/uploads/2025/07/ban-3.jpg');">
-                <div class="slide-content">
-                    <h2>Top Picks This Month</h2>
-                    <p>See what everyone’s reading — featured stories and trending blog posts curated for you.</p>
-                    <a href="#" class="slide-btn">View Highlights</a>
-                </div>
-            </div>
+                    <div class="slide active" style="background-image: url('<?php echo esc_url($banner['image']) ?>')">
+                        <div class="slide-content">
+                            <h2><?php echo esc_html($banner['heading']) ?></h2>
+                            <p><?php echo esc_html($banner['description']) ?></p>
+                            <?php
+                            if (!empty($banner['button_text']) && !empty($banner['button_url'])) {
+                            ?>
+                                <a href="<?php echo esc_url($banner['button_url']) ?>" class="slide-btn"><?php echo esc_html($banner['button_text']) ?></a>
+                            <?php } ?>
+                        </div>
+                    </div>
 
-            <!-- Slide 4 -->
-            <div class="slide" style="background-image: url('http://localhost/word/wp-content/uploads/2025/07/ban-4.jpg')">
-                <div class="slide-content">
-                    <h2>Join Our Community</h2>
-                    <p>Subscribe for updates and never miss a story. Connect, comment, and share your thoughts.</p>
-                    <a href="#" class="slide-btn">Subscribe Now</a>
-                </div>
-            </div>
+            <?php
+                }
+            }
+            ?>
+
         </div>
 
         <button class="nav-btn prev" onclick="changeSlide(-1)">❮</button>

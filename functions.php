@@ -1,66 +1,40 @@
 <?php
-require get_template_directory() . '/inc/classes/class-theme.php';
-
-function register_theme_assets()
+function elemental_theme_autoload()
 {
-  // Register Google Fonts
-  wp_register_style(
-    'inter-font',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
-    array(),
-    null
-  );
+    $classes = [
+        'inc/classes/class-theme.php',
+        'inc/classes/class-assets.php',
+        'inc/classes/class-menus.php',
+        'inc/classes/class-custom-post-types.php',
+        'inc/classes/class-homepage-banners.php'
+    ];
 
-  // Register main CSS (depends on Google Font)
-  wp_register_style(
-    'main-css',
-    get_template_directory_uri() . '/assets/css/theme.css',
-    array('inter-font'),
-    filemtime(get_template_directory() . '/assets/css/theme.css')
-  );
-
-  if (is_front_page()) {
-    // Enqueue front page CSS
-    wp_enqueue_style(
-      'front-page-css',
-      get_template_directory_uri() . '/assets/css/front-page.css',
-      array(),
-      filemtime(get_template_directory() . '/assets/css/front-page.css')
-    );
-  }
-
-  // Register main JS
-  wp_register_script(
-    'main-js',
-    get_template_directory_uri() . '/assets/js/theme.js',
-    array(),
-    filemtime(get_template_directory() . '/assets/js/theme.js'),
-    true
-  );
-
-  // Enqueue styles
-  wp_enqueue_style('inter-font');
-  wp_enqueue_style('main-css');
-
-  // Enqueue scripts
-  wp_enqueue_script('main-js');
+    foreach ($classes as $class) {
+        $file = get_template_directory() . '/' . $class;
+        if (file_exists($file)) {
+            require_once $file;
+        }
+    }
 }
 
-add_action('wp_enqueue_scripts', 'register_theme_assets');
-
-
-// Add menu support
-
-function register_my_menus()
+function elemental_theme_load_helpers()
 {
-  register_nav_menus(
-    array(
-      'header-menu' => __('Header Menu'),
-      'extra-menu' => __('Extra Menu')
-    )
-  );
+    $helper_file = get_template_directory() . '/inc/helpers/helper-functions.php';
+    if (file_exists($helper_file)) {
+        require_once $helper_file;
+    }
 }
-add_action('init', 'register_my_menus');
 
+function elemental_theme_init()
+{
+    elemental_theme_autoload();
+    elemental_theme_load_helpers();
 
-// Setup 
+    ELEMENTAL_THEME::get_instance();
+    ELEMENTAL_ASSETS::get_instance();
+    ELEMENTAL_MENUS::get_instance();
+    ELEMENTAL_CUSTOM_POST_TYPES::get_instance();
+    ELEMENTAL_HOMEPAGE_BANNERS::get_instance();
+}
+
+elemental_theme_init();

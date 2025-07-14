@@ -1,9 +1,8 @@
 <?php
+include get_template_directory() . '/inc/helpers/menu-helper.php';
 
-include get_template_directory() . '/inc/helper.php';
-
-$header_menu_id = get_menu_id('header-menu');
-$header_menus   = wp_get_nav_menu_items($header_menu_id);
+$header_menu_id = ELEMENTAL_MENU_HELPER::get_menu_id('header-menu');
+$header_menus = wp_get_nav_menu_items($header_menu_id);
 
 ?>
 
@@ -19,7 +18,7 @@ $header_menus   = wp_get_nav_menu_items($header_menu_id);
                 foreach ($header_menus as $menu_item) {
                     if (! $menu_item->menu_item_parent) {
 
-                        $child_menu_items   = get_child_menu_items($header_menus, $menu_item->ID);
+                        $child_menu_items   = ELEMENTAL_MENU_HELPER::get_child_menu_items($header_menus, $menu_item->ID);
                         $has_children       = ! empty($child_menu_items) && is_array($child_menu_items);
                         $has_sub_menu_class = ! empty($has_children) ? 'has-submenu' : '';
                         $link_target        = ! empty($menu_item->target) && '_blank' === $menu_item->target ? '_blank' : '_self';
