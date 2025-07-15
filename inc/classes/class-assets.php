@@ -56,9 +56,20 @@ class ELEMENTAL_ASSETS
             true
         );
 
+        // Register page-specific stylesheets
+        wp_register_style(
+            'category-css',
+            get_template_directory_uri() . '/assets/css/category.css',
+            array('main-css'),
+            filemtime(get_template_directory() . '/assets/css/category.css')
+        );
+
         wp_enqueue_style('inter-font');
         wp_enqueue_style('main-css');
         wp_enqueue_script('main-js');
+
+        // Conditionally enqueue page-specific styles
+        $this->enqueue_conditional_asset('category-css', is_category());
     }
 
     public function enqueue_conditional_asset($handle, $condition = true)

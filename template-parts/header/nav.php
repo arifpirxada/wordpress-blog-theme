@@ -8,7 +8,7 @@ $header_menus = wp_get_nav_menu_items($header_menu_id);
 
 <nav class="navbar">
     <div class="navbar-container">
-        <a href="#" class="navbar-brand">ProBrand</a>
+        <a href="<?php echo esc_url(home_url('/')); ?>" class="navbar-brand"><?php bloginfo('name'); ?></a>
 
         <?php if (! empty($header_menus) && is_array($header_menus)) { ?>
 

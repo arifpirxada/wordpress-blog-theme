@@ -604,6 +604,7 @@ Footer CSS
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+    flex-direction: column;
 }
 
 .newsletter-form input {
