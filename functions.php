@@ -6,7 +6,8 @@ function elemental_theme_autoload()
         'inc/classes/class-assets.php',
         'inc/classes/class-menus.php',
         'inc/classes/class-custom-post-types.php',
-        'inc/classes/class-homepage-banners.php'
+        'inc/classes/class-homepage-banners.php',
+        'inc/classes/class-category-images.php'
     ];
 
     foreach ($classes as $class) {

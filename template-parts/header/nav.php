@@ -74,7 +74,9 @@ $header_menus = wp_get_nav_menu_items($header_menu_id);
         ?>
 
         <div class="navbar-search">
-            <input type="text" placeholder="Search...">
+            <form method="get" action="<?php echo home_url('/'); ?>">
+                <input type="text" name="s" placeholder="Search...">
+            </form>
         </div>
 
         <div class="hamburger">

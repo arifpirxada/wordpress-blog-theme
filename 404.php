@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 404 template.
+ * Template Name: 404 template.
  *
  * @package Elemental
  */

@@ -69,7 +69,7 @@ class ELEMENTAL_ASSETS
         wp_enqueue_script('main-js');
 
         // Conditionally enqueue page-specific styles
-        $this->enqueue_conditional_asset('category-css', is_category());
+        $this->enqueue_conditional_asset('category-css', is_category() || is_search());
     }
 
     public function enqueue_conditional_asset($handle, $condition = true)
