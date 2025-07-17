@@ -95,7 +95,7 @@ $footer_menus = wp_get_nav_menu_items($footer_menu_id);
         <div class="footer-bottom">
             <p>&copy; <?php echo date('Y'); ?> Elemental. All rights reserved. | Developed by arifpirxada</p>
             <p>
-                <a href="#">Privacy Policy</a> |
+                <a href="/privacy-policy">Privacy Policy</a> |
                 <a href="#">Terms of Service</a> |
                 <a href="#">Cookie Policy</a>
             </p>
